@@ -6,18 +6,21 @@ Compresses a video file to a target size using FFmpeg two-pass encoding.
 
 - FFmpeg installed and added to `PATH` (must include both `ffmpeg` and `ffprobe`)
 
-## Use The GUI (Recommended)
+## Run
 
-1. Double-click `VideoCompressorGUI.bat`
-2. Choose a video file
-3. Set target size in MB
-4. Click `Compress`
+- Keep these files together in the same folder:
+  - `VideoCompressor.exe`
+  - `VideoCompressor.dll`
+  - `VideoCompressor.deps.json`
+  - `VideoCompressor.runtimeconfig.json`
+- Double-click `VideoCompressor.exe`
+- Choose a video file
+- Set target size in MB
+- Click `Start Compression`
 
-The GUI shows live FFmpeg logs and saves output as `<original_name>_compressed.mp4` by default.
+Output is saved as `<original_name>_compressed.mp4` by default.
 
-## Use The Script Window (CLI Prompt Style)
+## Notes
 
-You can still use `VideoCompressor.bat`:
-
-- Drag a video onto `VideoCompressor.bat`, or
-- Open it first, then drag a video path into the window and press Enter
+- This optimized build is framework-dependent (much smaller size).
+- It requires .NET Desktop Runtime 8 on the target machine.
