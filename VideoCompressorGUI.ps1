@@ -621,11 +621,11 @@ $btnCompress.Add_Click({
         function Invoke-FfmpegStep {
             param(
                 [string]$Title,
-                [string[]]$Args
+                [string[]]$FfmpegArgs
             )
 
             Write-Output ">>> $Title"
-            & ffmpeg @Args 2>&1 | ForEach-Object {
+            & ffmpeg @FfmpegArgs 2>&1 | ForEach-Object {
                 if ($null -ne $_) {
                     $_.ToString()
                 }
@@ -658,8 +658,8 @@ $btnCompress.Add_Click({
             $OutputPath
         )
 
-        Invoke-FfmpegStep -Title "Pass 1 (Analysis)" -Args $pass1Args
-        Invoke-FfmpegStep -Title "Pass 2 (Encoding)" -Args $pass2Args
+        Invoke-FfmpegStep -Title "Pass 1 (Analysis)" -FfmpegArgs $pass1Args
+        Invoke-FfmpegStep -Title "Pass 2 (Encoding)" -FfmpegArgs $pass2Args
 
         Remove-Item -LiteralPath "ffmpeg2pass-0.log", "ffmpeg2pass-0.log.mbtree" -ErrorAction SilentlyContinue
     } -ArgumentList $inputPath, $outputPath, $videoBitrate, $workingDir
