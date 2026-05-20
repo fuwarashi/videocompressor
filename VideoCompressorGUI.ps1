@@ -563,7 +563,12 @@ $btnCompress.Add_Click({
     }
 
     $durationRaw = & ffprobe -v error -show_entries format=duration -of "default=noprint_wrappers=1:nokey=1" "$inputPath" 2>$null
-    if ($LASTEXITCODE -ne 0 -or $null -eq $durationRaw -or $durationRaw.Count -eq 0) {
+    $durationText = @($durationRaw) |
+        ForEach-Object { $_.ToString().Trim() } |
+        Where-Object { $_ -ne "" } |
+        Select-Object -First 1
+
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($durationText)) {
         [System.Windows.Forms.MessageBox]::Show(
             "ffprobe could not read the video duration.",
             "Video Compressor",
@@ -572,8 +577,6 @@ $btnCompress.Add_Click({
         ) | Out-Null
         return
     }
-
-    $durationText = $durationRaw[0].ToString().Trim()
     $durationSeconds = 0.0
     $parsed = [double]::TryParse(
         $durationText,
@@ -592,8 +595,8 @@ $btnCompress.Add_Click({
         return
     }
 
-    $durationInt = [Math]::Max([int][Math]::Floor($durationSeconds), 1)
-    $totalBitrate = [int][Math]::Floor(($targetMb * 8192 * 95 / 100) / $durationInt)
+    $durationForMath = [Math]::Max($durationSeconds, 1.0)
+    $totalBitrate = [int][Math]::Floor(($targetMb * 8192.0 * 95.0 / 100.0) / $durationForMath)
     $videoBitrate = [Math]::Max($totalBitrate - 128, 100)
     $workingDir = [System.IO.Path]::GetDirectoryName([System.IO.Path]::GetFullPath($outputPath))
 
@@ -601,7 +604,7 @@ $btnCompress.Add_Click({
     Add-LogLine "Input : $inputPath"
     Add-LogLine "Output: $outputPath"
     Add-LogLine "Target: $targetMb MB"
-    Add-LogLine "Duration (s): $durationInt"
+    Add-LogLine ("Duration (s): " + [Math]::Round($durationSeconds, 2))
     Add-LogLine "Video Bitrate: ${videoBitrate}k"
     Add-LogLine ""
 
