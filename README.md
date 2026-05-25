@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/12b309e6-6f48-40a3-86fe-99103b397b24" />VideoCompressor
+VideoCompressor
 
 A simple Windows GUI app that compresses videos to a target file size using FFmpeg two-pass encoding.
 
