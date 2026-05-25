@@ -1,22 +1,12 @@
-VideoCompressor
-
-A simple Windows GUI app that compresses videos to a target file size using FFmpeg two-pass encoding.
-
 Requirements:
-- ffmpeg and ffprobe installed and in PATH
-- FFmpeg download/info: https://ffmpeg.org/
-- .NET Desktop Runtime 8 (x64)
 
-Keep these files in the same folder:
-- VideoCompressor.exe
-- VideoCompressor.dll
-- VideoCompressor.deps.json
-- VideoCompressor.runtimeconfig.json
+ffmpeg and ffprobe installed and in PATH
+.NET Desktop Runtime 8 (x64)
 
 How to use:
-1. Open VideoCompressor.exe
-2. Select a video
-3. Enter target size in MB
-4. Click Start Compression
 
+Open VideoCompressor.exe
+Select a video
+Enter target size in MB
+Click Start Compression
 Output is saved as: <original_name>_compressed.mp4
